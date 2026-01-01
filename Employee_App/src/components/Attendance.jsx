@@ -50,6 +50,18 @@ function Attendance() {
   useEffect(() => {
     fetchAttendance();
   }, [employeeId]);
+  
+  const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  };
+
+  const formatTime = (timeString) => {
+    if (!timeString) return 'N/A';
+    const time = new Date(timeString);
+    return time.toLocaleTimeString();
+  };
 
   return (
     <div>
@@ -78,10 +90,10 @@ function Attendance() {
           </thead>
           <tbody>
             {attendanceRecords.map((record) => (
-              <tr key={record[0]}>
-                <td>{record[2]}</td> {/* date */}
-                <td>{record[3] ? new Date(record[3]).toLocaleTimeString() : 'N/A'}</td> {/* clock_in */}
-                <td>{record[4] ? new Date(record[4]).toLocaleTimeString() : 'N/A'}</td> {/* clock_out */}
+              <tr key={record.id}>
+                <td>{formatDate(record.date)}</td>
+                <td>{formatTime(record.clock_in)}</td>
+                <td>{formatTime(record.clock_out)}</td>
               </tr>
             ))}
           </tbody>

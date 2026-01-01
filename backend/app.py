@@ -80,6 +80,40 @@ def login():
     else:
         return jsonify({"success": False}), 401
 
+# ---------------- SIGNUP ----------------
+@app.route("/signup", methods=["POST"])
+def signup():
+    data = request.json
+    name = data.get("name")
+    username = data.get("username")
+    password = data.get("password")
+
+    if not all([name, username, password]):
+        return jsonify({"error": "Missing required fields"}), 400
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    try:
+        # Create employee record
+        cur.execute(
+            "INSERT INTO employees (name, role, salary) VALUES (?, ?, ?)",
+            (name, "employee", 50000)  # Default role and salary
+        )
+        
+        # Create user record
+        cur.execute(
+            "INSERT INTO users (username, password, role) VALUES (?, ?, ?)",
+            (username, password, "employee")
+        )
+        conn.commit()
+    except sqlite3.IntegrityError:
+        conn.close()
+        return jsonify({"error": "Username already exists"}), 409
+    
+    conn.close()
+    return jsonify({"success": True, "message": "Signup successful"})
+
 # ---------------- EMPLOYEES ----------------
 @app.route("/employees", methods=["GET", "POST"])
 def employees():
@@ -181,7 +215,18 @@ def get_employee_attendance(emp_id):
     query += " ORDER BY date DESC, clock_in DESC"
 
     cur.execute(query, params)
-    records = cur.fetchall()
+    
+    # Convert list of tuples to list of dictionaries
+    records = []
+    for row in cur.fetchall():
+        records.append({
+            "id": row[0],
+            "emp_id": row[1],
+            "date": row[2],
+            "clock_in": row[3],
+            "clock_out": row[4]
+        })
+        
     conn.close()
 
     return jsonify(records)

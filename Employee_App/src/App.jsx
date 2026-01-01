@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
-import Dashboard from "./pages/Dashboard"; // This will be created next
+import Signup from "./components/Signup";
+import Dashboard from "./pages/Dashboard";
 import Employee from "./components/Employee";
-import Attendance from "./components/Attendance"; // This will be the new attendance page
+import Attendance from "./components/Attendance";
 import Salary from "./components/Salary";
+import DashboardLayout from "./components/DashboardLayout";
 
 function App() {
   const [role, setRole] = useState(null); // role will be 'admin' or 'employee'
@@ -13,21 +15,26 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<Login onLogin={setRole} />} />
+        <Route path="/signup" element={<Signup />} />
         <Route
-          path="/"
-          element={role ? <Dashboard role={role} /> : <Navigate to="/login" replace />}
-        />
-        <Route
-          path="/employees"
-          element={role === "admin" ? <Employee /> : <Navigate to="/login" replace />}
-        />
-        <Route
-          path="/attendance"
-          element={role ? <Attendance /> : <Navigate to="/login" replace />}
-        />
-        <Route
-          path="/salary/:emp_id"
-          element={role ? <Salary /> : <Navigate to="/login" replace />}
+          path="/*"
+          element={
+            role ? (
+              <DashboardLayout role={role}>
+                <Routes>
+                  <Route path="/" element={<Dashboard role={role} />} />
+                  <Route
+                    path="/employees"
+                    element={role === "admin" ? <Employee /> : <Navigate to="/" replace />}
+                  />
+                  <Route path="/attendance" element={<Attendance />} />
+                  <Route path="/salary/:emp_id" element={<Salary />} />
+                </Routes>
+              </DashboardLayout>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
         />
       </Routes>
     </Router>

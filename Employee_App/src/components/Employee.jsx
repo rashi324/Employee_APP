@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 function Employee() {
   const [employees, setEmployees] = useState([]);
@@ -6,11 +6,11 @@ function Employee() {
   const [role, setRole] = useState("");
   const [salary, setSalary] = useState("");
 
-  const loadEmployees = async () => {
+  const loadEmployees = useCallback(async () => {
     const res = await fetch("http://localhost:5000/employees");
     const data = await res.json();
     setEmployees(data);
-  };
+  }, []);
 
   const addEmployee = async () => {
     await fetch("http://localhost:5000/employees", {
@@ -22,8 +22,9 @@ function Employee() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadEmployees();
-  }, []);
+  }, [loadEmployees]);
 
   return (
     <div>
@@ -38,7 +39,7 @@ function Employee() {
       <ul>
         {employees.map(e => (
           <li key={e[0]}>
-            {e[1]} - {e[2]} - ₹{e[3]}
+            {e[0]} - {e[1]} - {e[2]} - ₹{e[3]}
           </li>
         ))}
       </ul>
