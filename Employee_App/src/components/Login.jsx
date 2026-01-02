@@ -1,113 +1,95 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "./Login.css";
 
-function Login({ onLogin }) {
-  const [username, setUsername] = useState("");
+function Login() {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const login = async () => {
-    const res = await fetch("http://localhost:5000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-    });
+  // ✅ LOGIN FUNCTION (MERGED CORRECTLY)
+  const handleLogin = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
 
-    if (res.ok) {
       const data = await res.json();
-      onLogin(data.role);
-      navigate("/");
-    } else {
-      alert("Invalid credentials");
+
+      if (!res.ok) {
+        alert(data.message || "Login failed");
+        return;
+      }
+
+      // ✅ SAVE TOKEN
+      localStorage.setItem("token", data.token);
+
+      alert("Login successful");
+      navigate("/dashboard"); // ✅ GO TO DASHBOARD
+    } catch (error) {
+      alert("Server error");
     }
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={styles.title}>Login</h2>
+    <div className="login-wrapper">
+      <div className="login-card">
+        <h1>Welcome Back</h1>
+        <p className="subtitle">
+          Ready to continue your learning journey?
+          <br />
+          Your path is right here.
+        </p>
 
         <input
-          style={styles.input}
-          placeholder="Username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
+          className="input"
+          type="email"
+          placeholder="Enter email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
-        <input
-          style={styles.input}
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
+        <div className="password-box">
+          <input
+            className="input"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <span className="eye"></span>
+        </div>
 
-        <button style={styles.button} onClick={login}>
-          Login
+        <div className="options">
+          <label>
+            <input type="checkbox" />
+            Remember me
+          </label>
+          <span className="forgot">Forgot password?</span>
+        </div>
+
+        <button className="login-btn" onClick={handleLogin}>
+          Log In
         </button>
 
-        <p style={styles.text}>
-          Don't have an account? <Link style={styles.link} to="/signup">Signup</Link>
+        <div className="divider">
+          <span>Sign in with</span>
+        </div>
+
+        <div className="social">
+          <button className="social-btn fb">f</button>
+          <button className="social-btn g">G</button>
+          <button className="social-btn apple"></button>
+        </div>
+
+        <p className="signup">
+          Don’t have an account? <Link to="/signup">Sign Up</Link>
         </p>
       </div>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-    background: "linear-gradient(135deg, #1f1c2c, #928dab)",
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-  },
-  card: {
-    backgroundColor: "#2c2c2c",
-    padding: "40px 50px",
-    borderRadius: "12px",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-    width: "350px",
-    textAlign: "center",
-  },
-  title: {
-    color: "#fff",
-    marginBottom: "30px",
-    fontSize: "28px",
-  },
-  input: {
-    width: "100%",
-    padding: "15px",
-    marginBottom: "20px",
-    borderRadius: "8px",
-    border: "none",
-    fontSize: "16px",
-    outline: "none",
-    backgroundColor: "#3b3b3b",
-    color: "#fff",
-  },
-  button: {
-    width: "100%",
-    padding: "15px",
-    borderRadius: "8px",
-    border: "none",
-    fontSize: "18px",
-    backgroundColor: "#6c63ff",
-    color: "#fff",
-    cursor: "pointer",
-    transition: "0.3s",
-  },
-  text: {
-    marginTop: "20px",
-    color: "#bbb",
-    fontSize: "14px",
-  },
-  link: {
-    color: "#6c63ff",
-    textDecoration: "none",
-    fontWeight: "bold",
-  },
-};
 
 export default Login;

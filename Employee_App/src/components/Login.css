@@ -1,0 +1,160 @@
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Full background */
+.login-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* Smaller card */
+.login-card {
+  background: #fff;
+  width: 100%;
+  max-width: 360px;          /* 🔽 smaller */
+  padding: 24px 20px;        /* 🔽 smaller */
+  border-radius: 22px;       /* 🔽 smaller */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.18);
+}
+
+/* Heading */
+.login-card h1 {
+  text-align: center;
+  font-size: 22px;           /* 🔽 smaller */
+  margin-bottom: 6px;
+}
+
+/* Subtitle */
+.subtitle {
+  text-align: center;
+  color: #777;
+  font-size: 13px;           /* 🔽 smaller */
+  margin-bottom: 18px;
+}
+
+/* Inputs */
+.input {
+  width: 100%;
+  padding: 11px 12px;        /* 🔽 smaller */
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+/* Password eye */
+.password-box {
+  position: relative;
+}
+
+.password-box .eye {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Remember / Forgot */
+.options {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;           /* 🔽 smaller */
+  margin-bottom: 18px;
+}
+
+.options label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.forgot {
+  color: #6a5acd;
+  cursor: pointer;
+}
+
+/* Login button */
+.login-btn {
+  width: 100%;
+  padding: 11px;             /* 🔽 smaller */
+  border: none;
+  border-radius: 22px;
+  background: linear-gradient(90deg, #fbc2eb, #a6c1ee);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;           /* 🔽 smaller */
+  cursor: pointer;
+}
+
+/* Divider */
+.divider {
+  text-align: center;
+  margin: 20px 0 12px;
+  font-size: 12px;
+  color: #999;
+}
+
+.divider span {
+  background: #fff;
+  padding: 0 8px;
+}
+
+/* Social buttons */
+.social {
+  display: flex;
+  justify-content: center;
+  gap: 14px;                 /* 🔽 smaller */
+}
+
+.social-btn {
+  width: 38px;               /* 🔽 smaller */
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.fb {
+  background: #1877f2;
+  color: #fff;
+}
+
+.g {
+  background: #fff;
+  border: 1px solid #ddd;
+}
+
+.apple {
+  background: #000;
+  color: #fff;
+}
+
+/* Signup text */
+.signup {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 12px;           /* 🔽 smaller */
+}
+
+.signup a {
+  color: #6a5acd;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* 📱 VERY SMALL MOBILE */
+@media (max-width: 400px) {
+  .login-card {
+    max-width: 100%;
+    padding: 20px 16px;
+  }
+}
