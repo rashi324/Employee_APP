@@ -1,3 +1,5 @@
+const { theme } = require('./src/lib/theme');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -18,6 +20,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        ...theme.colors,
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
