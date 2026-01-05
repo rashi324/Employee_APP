@@ -32,7 +32,7 @@ function Leave() {
 
   return (
     <div style={styles.container}>
-      <h1>Leave Management</h1>
+      <h1></h1>
 
       {/* APPLY LEAVE */}
       <div style={styles.card}>

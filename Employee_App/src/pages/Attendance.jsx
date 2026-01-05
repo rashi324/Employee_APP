@@ -45,7 +45,7 @@ function Attendance() {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.heading}>Attendance Management</h1>
+      <h1 style={styles.heading}></h1>
 
       {/* MARK ATTENDANCE */}
       <div style={styles.card}>

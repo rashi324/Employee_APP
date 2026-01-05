@@ -9,6 +9,7 @@ import Employees from "./pages/Employees";
 import Salary from "./pages/Salary";
 import Leave from "./pages/Leave";
 import Attendance from "./pages/Attendance";
+import Reports from "./pages/Reports";
 
 
 function App() {
@@ -67,10 +68,11 @@ function App() {
           path="/reports"
           element={
             <ProtectedRoute>
-              <Reports />
+              <Reports/>
             </ProtectedRoute>
           }
         />
+
 
         {/* DEFAULT */}
         <Route path="/" element={<Navigate to="/login" replace />} />

@@ -17,7 +17,7 @@ function Salary() {
 
   return (
     <div style={styles.container}>
-      <h1>Salary Management</h1>
+      <h1></h1>
 
       <div style={styles.card}>
         <h3>Calculate Salary</h3>
